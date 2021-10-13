@@ -19,6 +19,9 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String","URL_BASE","\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\""
+
     }
 
     buildTypes {
