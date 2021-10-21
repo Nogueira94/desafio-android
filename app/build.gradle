@@ -84,6 +84,7 @@ dependencies {
 //    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
     implementation "com.github.bumptech.glide:recyclerview-integration:$glide_version"
 
+    testImplementation "io.mockk:mockk:$mockk"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"

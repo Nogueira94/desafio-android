@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.requestUsers()
+        viewModel.loadData()
     }
 
     private fun startView() {
@@ -42,12 +42,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData(){
-        viewModel.apiResponse.observe(this) { result ->
+
+        viewModel.users.observe(this) { result ->
             when(result.status){
                 ApiStatus.LOADING ->
                     showProgress()
                 ApiStatus.ERROR ->
-                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                    showError()
                 ApiStatus.SUCCESS -> {
                     adapterListUser.users = result.data as List<User>
                     hideProgress()
@@ -56,6 +57,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showError(){
+        bind.errorContainer.visibility = View.VISIBLE
+        bind.retryButton.setOnClickListener {
+            viewModel.loadData()
+            hideError()
+        }
+    }
+
+    private fun hideError(){
+        bind.errorContainer.visibility = View.GONE
+    }
 
     private fun showProgress(){
         bind.userListProgressBar.visibility = View.VISIBLE

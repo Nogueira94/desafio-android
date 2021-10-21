@@ -26,7 +26,7 @@ class PicPayRepoImpl(private val api: PicPayService) {
             } catch (e: Exception) {
                 emit(ApiResult.Error(e.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
 }

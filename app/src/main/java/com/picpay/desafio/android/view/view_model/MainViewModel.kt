@@ -16,18 +16,19 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
 
-    private val service = picpayService
+    private val repository = PicPayRepoImpl(picpayService)
 
-    private val repository = PicPayRepoImpl(service)
+    private val _users = MutableLiveData<ApiResult<List<User>>>()
+    val users: LiveData<ApiResult<List<User>>> = _users
 
-    private val _users = MutableLiveData<Any>()
-    val apiResponse = _users.switchMap{
-        repository.loadData().asLiveData()
-    }
-    fun requestUsers(){
-        _users.value = Any()
+    fun loadData(){
+        viewModelScope.launch {
+            repository.loadData().collect {
+                _users.value = it
+            }
+        }
     }
 
 }
